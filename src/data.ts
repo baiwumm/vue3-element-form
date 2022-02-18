@@ -1,71 +1,66 @@
-import type { TableColumnCtx } from 'element-plus/es/components/table/src/table-column/defaults'
-interface columnTypes {
-    id: string,
-    name: string,
-    province: string,
-    area: string,
-    county: string,
-    amount: Number
-}
-// 表格列配置
-export const columns: any = [
-    // 自定义索引
+// 岗位列表
+export const jobsList = [
     {
-        label: '排名',
-        prop: 'ranking',
-        type: 'index',
-        width: 80,
-        index: (index: number) => {
-            return index * 3
-        }
+        value: 'FrontEndEngineer',
+        label: '前端工程师'
     },
     {
-        prop: 'name',
-        label: '名字',
-        filters: [
-            { text: '李白2', value: '李白2' },
-            { text: '李白4', value: '李白4' }
-        ],
-        'filter-method': (value: string,
-            row: columnTypes,
-            column: TableColumnCtx<columnTypes>) => {
-            const property = column['property']
-            // @ts-ignore
-            return row[property] === value
-        },
-        slotName: 'name'
+        value: 'BackEndEngineer',
+        label: '后端工程师'
+    }
+]
+
+// 部门列表
+export const departmentList = [
+    {
+        id: 'hr',
+        name: '人事'
     },
     {
-        prop: 'address',
-        label: '地址',
-        children: [
-            {
-                label: '省份',
-                prop: 'province',
-                align: 'center'
-            },
-            {
-                label: '城市',
-                prop: 'city',
-                align: 'center',
-                children: [
-                    {
-                        label: '区',
-                        prop: 'area',
-                        align: 'center',
-                    },
-                    {
-                        label: '县',
-                        prop: 'county',
-                        align: 'center',
-                    }
-                ]
-            }
-        ]
+        id: 'financial',
+        name: '财务'
     },
     {
-        prop: 'amount',
-        label: '金额',
-        sortable: true
+        id: 'manager',
+        name: '经理'
+    }
+]
+
+// 省份
+export const provinces = [
+    {
+        value: 'guangdong',
+        label: '广东'
     },
+    {
+        value: 'hunan',
+        label: '湖南'
+    }
+]
+
+// 市区列表
+export const cityGdList = [
+    {
+        value: 'zhanjiang',
+        label: '湛江'
+    },
+    {
+        value: 'shenzhen',
+        label: '深圳'
+    },
+    {
+        value: 'guangzhou',
+        label: '广州'
+    },
+]
+
+export const cityHnList = [
+    {
+        value: 'changsha',
+        label: '长沙'
+    },
+    {
+        value: 'zhuzhou',
+        label: '株洲'
+    }
 ]

@@ -1,12 +1,10 @@
 <template>
-    <el-input
+    <el-autocomplete
         v-bind="$attrs"
         v-model="Val"
-        @blur="props.blur ? props.blur($event) : false"
-        @focus="props.focus ? props.focus($event) : false"
+        @select="props.select ? props.select($event) : false"
         @change="props.change ? props.change($event) : false"
-        @input="props.input ? props.input($event) : false"
-        @clear="props.clear ? props.clear() : false"
+        style="width:100%"
     />
 </template>
 <script lang="ts" setup>
@@ -17,23 +15,11 @@ const props = defineProps({
         type: String,
         default: () => ''
     },
-    blur: {
-        type: Function,
-        default: () => () => { }
-    },
-    focus: {
+    select: {
         type: Function,
         default: () => () => { }
     },
     change: {
-        type: Function,
-        default: () => () => { }
-    },
-    input: {
-        type: Function,
-        default: () => () => { }
-    },
-    clear: {
         type: Function,
         default: () => () => { }
     }
