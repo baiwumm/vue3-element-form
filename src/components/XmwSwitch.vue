@@ -1,23 +1,14 @@
 <template>
-    <el-autocomplete
-        v-bind="$attrs"
-        v-model="Val"
-        style="width:100%"
-        @select="props.select ? props.select($event) : false"
-        @change="props.change ? props.change($event) : false"
-    />
+    <el-switch v-model="Val" v-bind="$attrs" @change="props.change ? props.change($event) : false" />
 </template>
+
 <script lang="ts" setup>
 import { ref, defineProps, watch, defineEmits } from 'vue'
 const emit = defineEmits(["update:modelValue"])
 const props = defineProps({
     modelValue: {
-        type: String,
+        type: [Boolean, String, Number],
         default: () => ''
-    },
-    select: {
-        type: Function,
-        default: () => () => { }
     },
     change: {
         type: Function,

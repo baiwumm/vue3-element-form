@@ -1,22 +1,28 @@
 <template>
-    <el-input
-        v-bind="$attrs"
+    <el-date-picker
         v-model="Val"
+        v-bind="$attrs"
         style="width:100%"
+        @change="props.change ? props.change($event) : false"
         @blur="props.blur ? props.blur($event) : false"
         @focus="props.focus ? props.focus($event) : false"
-        @change="props.change ? props.change($event) : false"
-        @input="props.input ? props.input($event) : false"
-        @clear="props.clear ? props.clear() : false"
-    />
+        @calendar-change="props.calendarChange ? props.calendarChange($event) : false"
+        @panel-change="props.panelChange ? props.panelChange($event) : false"
+        @visible-change="props.visibleChange ? props.visibleChange($event) : false"
+    ></el-date-picker>
 </template>
+
 <script lang="ts" setup>
 import { ref, defineProps, watch, defineEmits } from 'vue'
 const emit = defineEmits(["update:modelValue"])
 const props = defineProps({
     modelValue: {
-        type: String,
+        type: [String, Array, Date],
         default: () => ''
+    },
+    change: {
+        type: Function,
+        default: () => () => { }
     },
     blur: {
         type: Function,
@@ -26,15 +32,15 @@ const props = defineProps({
         type: Function,
         default: () => () => { }
     },
-    change: {
+    calendarChange: {
         type: Function,
         default: () => () => { }
     },
-    input: {
+    panelChange: {
         type: Function,
         default: () => () => { }
     },
-    clear: {
+    visibleChange: {
         type: Function,
         default: () => () => { }
     }

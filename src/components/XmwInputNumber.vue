@@ -1,9 +1,10 @@
 <template>
-    <el-autocomplete
+    <el-input-number
         v-bind="$attrs"
         v-model="Val"
         style="width:100%"
-        @select="props.select ? props.select($event) : false"
+        @blur="props.blur ? props.blur($event) : false"
+        @focus="props.focus ? props.focus($event) : false"
         @change="props.change ? props.change($event) : false"
     />
 </template>
@@ -12,10 +13,14 @@ import { ref, defineProps, watch, defineEmits } from 'vue'
 const emit = defineEmits(["update:modelValue"])
 const props = defineProps({
     modelValue: {
-        type: String,
+        type: Number,
         default: () => ''
     },
-    select: {
+    blur: {
+        type: Function,
+        default: () => () => { }
+    },
+    focus: {
         type: Function,
         default: () => () => { }
     },

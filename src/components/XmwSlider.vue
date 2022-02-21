@@ -1,25 +1,25 @@
 <template>
-    <el-autocomplete
-        v-bind="$attrs"
+    <el-slider
         v-model="Val"
-        style="width:100%"
-        @select="props.select ? props.select($event) : false"
+        v-bind="$attrs"
         @change="props.change ? props.change($event) : false"
+        @input="props.change ? props.change($event) : false"
     />
 </template>
+
 <script lang="ts" setup>
 import { ref, defineProps, watch, defineEmits } from 'vue'
 const emit = defineEmits(["update:modelValue"])
 const props = defineProps({
     modelValue: {
-        type: String,
+        type: [Array, Number],
         default: () => ''
     },
-    select: {
+    change: {
         type: Function,
         default: () => () => { }
     },
-    change: {
+    input: {
         type: Function,
         default: () => () => { }
     }
