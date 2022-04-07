@@ -64,3 +64,35 @@ export const cityHnList = [
         label: '株洲'
     }
 ]
+
+// 城市级联数据
+export const areaOpts = [
+    {
+        value: 'guangdong',
+        label: '广东',
+        children: [
+            {
+                value: 'shenzhen',
+                label: '深圳',
+            },
+            {
+                value: 'zhanjiang',
+                label: '湛江',
+            }
+        ]
+    },
+    {
+        value: 'hunan',
+        label: '湖南',
+        children: [
+            {
+                value: 'zhuzhou',
+                label: '株洲',
+            },
+            {
+                value: 'changsha',
+                label: '长沙',
+            }
+        ]
+    }
+]
