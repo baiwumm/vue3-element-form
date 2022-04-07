@@ -1,10 +1,12 @@
 <template>
-    <el-slider
+    <el-time-select
         v-model="Val"
         v-bind="$attrs"
+        style="width:100%"
         @change="props.change ? props.change($event) : false"
-        @input="props.change ? props.input($event) : false"
-    />
+        @blur="props.blur ? props.blur($event) : false"
+        @focus="props.focus ? props.focus($event) : false"
+    ></el-time-select>
 </template>
 
 <script lang="ts" setup>
@@ -12,14 +14,18 @@ import { ref, defineProps, watch, defineEmits } from 'vue'
 const emit = defineEmits(["update:modelValue"])
 const props = defineProps({
     modelValue: {
-        type: [Array, Number],
+        type: String,
         default: () => ''
     },
     change: {
         type: Function,
         default: () => () => { }
     },
-    input: {
+    blur: {
+        type: Function,
+        default: () => () => { }
+    },
+    focus: {
         type: Function,
         default: () => () => { }
     }

@@ -1,9 +1,8 @@
 <template>
-    <el-slider
+    <el-rate
         v-model="Val"
         v-bind="$attrs"
         @change="props.change ? props.change($event) : false"
-        @input="props.change ? props.input($event) : false"
     />
 </template>
 
@@ -12,14 +11,10 @@ import { ref, defineProps, watch, defineEmits } from 'vue'
 const emit = defineEmits(["update:modelValue"])
 const props = defineProps({
     modelValue: {
-        type: [Array, Number],
-        default: () => ''
+        type: Number,
+        default: () => 0
     },
     change: {
-        type: Function,
-        default: () => () => { }
-    },
-    input: {
         type: Function,
         default: () => () => { }
     }
