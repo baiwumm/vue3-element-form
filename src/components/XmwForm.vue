@@ -1,28 +1,17 @@
 <template>
-    <el-form :model="prop.formData" v-bind="$attrs" :rules="prop.formRules">
+    <el-form :model="props.formData" v-bind="$attrs" :rules="props.formRules" ref="formRef">
         <el-row>
-            <el-col
-                v-for="(item, index) in prop.formColumns"
-                :key="index"
-                :span="item.span"
-                :offset="item.offset"
-            >
+            <el-col v-for="(column, index) in props.formColumns" :key="index" :span="column.span"
+                :offset="column.offset">
                 <!-- 自定义输入框插槽 -->
-                <template v-if="item.slotName">
-                    <slot :name="item.slotName"></slot>
+                <template v-if="column.slotName">
+                    <slot :name="column.slotName"></slot>
                 </template>
-                <el-form-item
-                    :label="item.label"
-                    :prop="item.prop"
-                    v-else
-                    v-bind="item.formItemOpts"
-                >
+                <el-form-item :label="column.label" :props="column.prop" v-else v-bind="column.formItemOpts">
                     <!-- 表单动态组件 -->
-                    <component
-                        :is="componentsTypes[item.xType]"
-                        v-bind="item"
-                        v-model="prop.formData[item.prop]"
-                    ></component>
+                    <component :is="componentsTypes[column.xType]" v-bind="column"
+                        v-model="props.formData[column.prop]">
+                    </component>
                 </el-form-item>
             </el-col>
         </el-row>
@@ -46,7 +35,8 @@ import Rate from './XmwRate.vue' // Rate 评分
 import Transfer from './XmwTransfer.vue' // Transfer 穿梭框
 import Cascader from './XmwCascader.vue' // Cascader 级联框
 import ColorPicker from './XmwColorPicker.vue' // ColorPicker 颜色选择器
-const prop = defineProps({
+import Tree from './XmwTree.vue' // Tree 树形控件
+const props = defineProps({
     // 表单数据
     formData: {
         type: Object,
@@ -65,7 +55,9 @@ const prop = defineProps({
 })
 // 定义动态组件
 const componentsTypes = ({
-    Input, Autocomplete, Select, SelectV2, DatePicker, TimePicker, TimeSelect, InputNumber, Radio, Checkbox, Switch, Slider, Rate, Transfer, Cascader, ColorPicker
+    Input, Autocomplete, Select, SelectV2, DatePicker, TimePicker, TimeSelect, InputNumber, Radio, Checkbox, Switch, Slider, Rate, Transfer, Cascader, ColorPicker, Tree
 })
+// 将表单绑定的ref暴露给父组件
+const formRef = ref<HTMLElement | null>(null)
+defineExpose({ formRef })
 </script>
-<style scoped></style>

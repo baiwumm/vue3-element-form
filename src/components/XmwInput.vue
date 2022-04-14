@@ -39,7 +39,6 @@ const props = defineProps({
         default: () => () => { }
     }
 })
-
 const Val = ref(props.modelValue)
 //监听父组件的值
 watch(() => props.modelValue, () => {

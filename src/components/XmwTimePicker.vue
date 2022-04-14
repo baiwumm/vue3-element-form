@@ -1,13 +1,8 @@
 <template>
-    <el-time-picker
-        v-model="Val"
-        v-bind="$attrs"
-        style="width:100%"
-        @change="props.change ? props.change($event) : false"
-        @blur="props.blur ? props.blur($event) : false"
+    <el-time-picker v-model="Val" v-bind="$attrs" style="width:100%"
+        @change="props.change ? props.change($event) : false" @blur="props.blur ? props.blur($event) : false"
         @focus="props.focus ? props.focus($event) : false"
-        @visible-change="props.visibleChange ? props.visibleChange($event) : false"
-    ></el-time-picker>
+        @visible-change="props.visibleChange ? props.visibleChange($event) : false"></el-time-picker>
 </template>
 
 <script lang="ts" setup>
@@ -15,7 +10,7 @@ import { ref, defineProps, watch, defineEmits } from 'vue'
 const emit = defineEmits(["update:modelValue"])
 const props = defineProps({
     modelValue: {
-        type: [Array,String],
+        type: [Array, String, Date],
         default: () => ''
     },
     change: {
