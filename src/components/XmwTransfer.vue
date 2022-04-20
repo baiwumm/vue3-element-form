@@ -1,15 +1,11 @@
 <template>
-    <el-transfer
-        v-model="Val"
-        v-bind="$attrs"
-        @change="props.change ? props.change($event) : false"
-        @left-check-change="props.leftCheckChange ? props.leftCheckChange($event) : false"
-        @right-check-change="props.rightCheckChange ? props.rightCheckChange($event) : false"
-    />
+    <el-transfer v-model="Val" v-bind="$attrs" @change="(a, b) => props.change ? props.change(a, b) : false"
+        @left-check-change="(a, b) => props.leftCheckChange ? props.leftCheckChange(a, b) : false"
+        @right-check-change="(a, b) => props.rightCheckChange ? props.rightCheckChange(a, b) : false" />
 </template>
 
 <script lang="ts" setup>
-import { ref, defineProps, watch, defineEmits } from 'vue'
+import { ref, watch } from 'vue'
 const emit = defineEmits(["update:modelValue"])
 const props = defineProps({
     modelValue: {

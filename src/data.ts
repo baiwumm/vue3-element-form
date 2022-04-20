@@ -119,18 +119,22 @@ export const predefineColors = [
 export const predefineTrees = [
     {
         id: 'home',
+        value: 'home',
         label: '主页',
     },
     {
         id: 'setting',
+        value: 'setting',
         label: '系统设置',
         children: [
             {
                 id: 'menu',
+                value: 'menu',
                 label: '菜单管理',
             },
             {
                 id: 'log',
+                value: 'log',
                 label: '操作日志',
             },
         ]

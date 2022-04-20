@@ -1,19 +1,14 @@
 <template>
-    <el-date-picker
-        v-model="Val"
-        v-bind="$attrs"
-        style="width:100%"
-        @change="props.change ? props.change($event) : false"
-        @blur="props.blur ? props.blur($event) : false"
+    <el-date-picker v-model="Val" v-bind="$attrs" style="width:100%"
+        @change="props.change ? props.change($event) : false" @blur="props.blur ? props.blur($event) : false"
         @focus="props.focus ? props.focus($event) : false"
         @calendar-change="props.calendarChange ? props.calendarChange($event) : false"
-        @panel-change="props.panelChange ? props.panelChange($event) : false"
-        @visible-change="props.visibleChange ? props.visibleChange($event) : false"
-    ></el-date-picker>
+        @panel-change="(a, b, c) => props.panelChange ? props.panelChange(a, b, c) : false"
+        @visible-change="props.visibleChange ? props.visibleChange($event) : false"></el-date-picker>
 </template>
 
 <script lang="ts" setup>
-import { ref, defineProps, watch, defineEmits } from 'vue'
+import { ref, watch } from 'vue'
 const emit = defineEmits(["update:modelValue"])
 const props = defineProps({
     modelValue: {

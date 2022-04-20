@@ -1,18 +1,12 @@
 <template>
-    <el-tree v-bind="$attrs" v-model="Val" style="width:100%"
+    <el-tree-v2 v-bind="$attrs" v-model="Val" style="width:100%"
         @node-click="(a, b, c) => props.nodeClick ? props.nodeClick(a, b, c) : false"
         @node-contextmenu="(a, b, c, d) => props.nodeContextmenu ? props.nodeContextmenu(a, b, c, d) : false"
         @check-change="(a, b, c) => props.checkChange ? props.checkChange(a, b, c) : false"
         @check="(a, b) => props.check ? props.check(a, b) : false"
         @current-change="(a, b) => props.currentChange ? props.currentChange(a, b) : false"
         @node-expand="(a, b, c) => props.nodeExpand ? props.nodeExpand(a, b, c) : false"
-        @node-collapse="(a, b, c) => props.nodeCollapse ? props.nodeCollapse(a, b, c) : false"
-        @node-drag-start="(a, b) => props.nodeDragStart ? props.nodeDragStart(a, b) : false"
-        @node-drag-enter="(a, b, c) => props.nodeDragEnter ? props.nodeDragEnter(a, b, c) : false"
-        @node-drag-leave="(a, b, c) => props.nodeDragLeave ? props.nodeDragLeave(a, b, c) : false"
-        @node-drag-over="(a, b, c) => props.nodeDragOver ? props.nodeDragOver(a, b, c) : false"
-        @node-drag-end="(a, b, c, d) => props.nodeDragEnd ? props.nodeDragEnd(a, b, c, d) : false"
-        @node-drop="(a, b, c, d) => props.nodeDrop ? props.nodeDrop(a, b, c, d) : false" />
+        @node-collapse="(a, b, c) => props.nodeCollapse ? props.nodeCollapse(a, b, c) : false" />
 </template>
 <script lang="ts" setup>
 import { ref, watch } from 'vue'
@@ -54,36 +48,6 @@ const props = defineProps({
     },
     // 	节点被关闭时触发的事件
     nodeCollapse: {
-        type: Function,
-        default: function () { }
-    },
-    // 	节点开始拖拽时触发的事件
-    nodeDragStart: {
-        type: Function,
-        default: function () { }
-    },
-    // 	拖拽进入其他节点时触发的事件
-    nodeDragEnter: {
-        type: Function,
-        default: function () { }
-    },
-    // 	拖拽离开某个节点时触发的事件
-    nodeDragLeave: {
-        type: Function,
-        default: function () { }
-    },
-    // 	在拖拽节点时触发的事件（类似浏览器的 mouseover 事件）
-    nodeDragOver: {
-        type: Function,
-        default: function () { }
-    },
-    // 	拖拽结束时（可能未成功）触发的事件
-    nodeDragEnd: {
-        type: Function,
-        default: function () { }
-    },
-    // 	拖拽成功完成时触发的事件
-    nodeDrop: {
         type: Function,
         default: function () { }
     }

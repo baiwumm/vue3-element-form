@@ -1,24 +1,23 @@
 <template>
-    <el-form :model="props.formData" v-bind="$attrs" :rules="props.formRules" ref="formRef">
+    <el-form ref="formRef" :model="props.formData" :rules="props.formRules" v-bind="$attrs">
         <el-row>
             <el-col v-for="(column, index) in props.formColumns" :key="index" :span="column.span"
                 :offset="column.offset">
-                <!-- 自定义输入框插槽 -->
                 <template v-if="column.slotName">
                     <slot :name="column.slotName"></slot>
                 </template>
-                <el-form-item :label="column.label" :props="column.prop" v-else v-bind="column.formItemOpts">
-                    <!-- 表单动态组件 -->
+                <el-form-item :label="column.label" :prop="column.prop" v-else v-bind="column.formItemOpts">
                     <component :is="componentsTypes[column.xType]" v-bind="column"
                         v-model="props.formData[column.prop]">
                     </component>
                 </el-form-item>
             </el-col>
+
         </el-row>
     </el-form>
 </template>
 <script lang="ts" setup>
-import { ref, reactive, defineProps } from 'vue'
+import { ref, markRaw } from 'vue'
 import Input from './XmwInput.vue' // Input 入框
 import Autocomplete from './XmwAutocomplete.vue' // Autocomplete 自动补全输入框
 import Select from './XmwSelect.vue' // Select 下拉框
@@ -36,6 +35,9 @@ import Transfer from './XmwTransfer.vue' // Transfer 穿梭框
 import Cascader from './XmwCascader.vue' // Cascader 级联框
 import ColorPicker from './XmwColorPicker.vue' // ColorPicker 颜色选择器
 import Tree from './XmwTree.vue' // Tree 树形控件
+import TreeSelect from './XmwTreeSelect.vue' // TreeSelect 树形选择
+import TreeV2 from './XmwTreeV2.vue' // Tree V2 虚拟化树形控件
+import type { FormInstance } from 'element-plus'
 const props = defineProps({
     // 表单数据
     formData: {
@@ -44,7 +46,7 @@ const props = defineProps({
     },
     // 表单配置项
     formColumns: {
-        type: Array,
+        type: Array as any,
         default: () => []
     },
     // 表单规则验证
@@ -54,10 +56,10 @@ const props = defineProps({
     }
 })
 // 定义动态组件
-const componentsTypes = ({
-    Input, Autocomplete, Select, SelectV2, DatePicker, TimePicker, TimeSelect, InputNumber, Radio, Checkbox, Switch, Slider, Rate, Transfer, Cascader, ColorPicker, Tree
+const componentsTypes = markRaw({
+    Input, Autocomplete, Select, SelectV2, DatePicker, TimePicker, TimeSelect, InputNumber, Radio, Checkbox, Switch, Slider, Rate, Transfer, Cascader, ColorPicker, Tree, TreeSelect, TreeV2
 })
 // 将表单绑定的ref暴露给父组件
-const formRef = ref<HTMLElement | null>(null)
+const formRef = ref<FormInstance>()
 defineExpose({ formRef })
 </script>

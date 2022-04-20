@@ -1,15 +1,10 @@
 <template>
-    <el-input-number
-        v-bind="$attrs"
-        v-model="Val"
-        style="width:100%"
-        @blur="props.blur ? props.blur($event) : false"
+    <el-input-number v-bind="$attrs" v-model="Val" style="width:100%" @blur="props.blur ? props.blur($event) : false"
         @focus="props.focus ? props.focus($event) : false"
-        @change="props.change ? props.change($event) : false"
-    />
+        @change="(a, b) => props.change ? props.change(a, b) : false" />
 </template>
 <script lang="ts" setup>
-import { ref, defineProps, watch, defineEmits } from 'vue'
+import { ref, watch } from 'vue'
 const emit = defineEmits(["update:modelValue"])
 const props = defineProps({
     modelValue: {

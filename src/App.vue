@@ -4,6 +4,8 @@ import zhCn from 'element-plus/lib/locale/lang/zh-cn'
 import { jobsList, departmentList, provinces, cityGdList, cityHnList, areaOpts, predefineColors, predefineTrees } from './data'
 import { Apple, Bell } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
+import type { FormInstance, FormRules } from 'element-plus'
+
 // 穿梭框数据
 interface Option {
   key: number
@@ -43,6 +45,42 @@ const permissionsItem = [{
     }
   ]
 }]
+
+interface Tree {
+  id: string
+  label: string
+  children?: Tree[]
+}
+
+const getKey = (prefix: string, id: number) => {
+  return `${prefix}-${id}`
+}
+
+const createData = (
+  maxDeep: number,
+  maxChildren: number,
+  minNodesNumber: number,
+  deep = 1,
+  key = 'node'
+): Tree[] => {
+  let id = 0
+  return Array.from({ length: minNodesNumber })
+    .fill(deep)
+    .map(() => {
+      const childrenNumber =
+        deep === maxDeep ? 0 : Math.round(Math.random() * maxChildren)
+      const nodeKey = getKey(key, ++id)
+      return {
+        id: nodeKey,
+        label: nodeKey,
+        children: childrenNumber
+          ? createData(maxDeep, maxChildren, childrenNumber, deep + 1, nodeKey)
+          : undefined,
+      }
+    })
+}
+
+const treeV2Data = createData(4, 30, 40)
 // 表单数据
 const formData = reactive(
   {
@@ -65,6 +103,8 @@ const formData = reactive(
     hometown: ['guangdong', 'zhanjiang'],
     virtualList: [],
     permissionsMenu: permissionsItem,
+    treeSelect: ['home', 'log'],
+    treeSelectV2: [],
     transfer: [1],
     loveColor: 'rgba(255, 69, 0, 0.68)',
   })
@@ -241,13 +281,32 @@ const formColumns = reactive([
     options: selectV2Options
   },
   {
+    xType: 'TreeSelect',
+    label: '树形选择',
+    prop: 'treeSelect',
+    multiple: true,
+    data: predefineTrees,
+    'show-checkbox': true,
+    'node-key': 'id',
+    span: 8,
+  },
+  {
     xType: 'Tree',
-    label: '权限菜单',
+    label: '树形控件',
     prop: 'permissionsMenu',
     data: predefineTrees,
     'show-checkbox': true,
     'node-key': 'id',
     check: checkRoles,
+    span: 8,
+  },
+  {
+    xType: 'TreeV2',
+    label: '虚拟树形控件',
+    prop: 'treeSelectV2',
+    data: treeV2Data,
+    'show-checkbox': true,
+    'node-key': 'id',
     span: 8,
   },
   {
@@ -283,13 +342,10 @@ const formColumns = reactive([
   },
 ])
 // 表单验证规则
-const formRules = {
+const formRules = reactive<FormRules>({
   userName: [
-    {
-      required: true,
-      message: '请输入名字',
-      trigger: 'blur',
-    }
+    { required: true, message: '请输入名字', trigger: 'blur' },
+    { min: 2, max: 5, message: '名字长度在2-5个字', trigger: 'blur' },
   ],
   email: [
     {
@@ -305,7 +361,7 @@ const formRules = {
       trigger: 'change',
     }
   ],
-}
+})
 
 // 输入框触发事件
 function input(val: string | number) {
@@ -348,10 +404,11 @@ const loop = function (tree: any) {
 loop(formData.permissionsMenu);
 
 const baseForm = ref<HTMLElement | null>(null)
+
 // 提交操作
-function onSubmit() {
-  console.log(baseForm.value.formRef)
-  baseForm.value.formRef.validate(valid => {
+async function onSubmit(formEl: FormInstance | undefined) {
+  if (!formEl) return
+  await formEl.formRef.validate((valid, fields) => {
     if (!valid) return
     console.log(formData)
     ElMessage({
@@ -363,7 +420,6 @@ function onSubmit() {
 
 // 重置操作
 function handlerReset() {
-  console.log(childKeys)
   baseForm.value.formRef.resetFields()
   formData.permissionsMenu = permissionsItem
   formColumns.find(el => el.prop == 'permissionsMenu').defaultCheckedKeys = childKeys
@@ -379,7 +435,7 @@ onMounted(() => {
 
 <template>
   <el-config-provider :locale="zhCn">
-    <div class="container" style="width: 90%; margin: 0 auto">
+    <div class="container" style="width: 90%; margin: 0 auto;padding-bottom:30px">
       <XmwForm :formData="formData" :formColumns="formColumns" :formRules="formRules" label-width="120px"
         ref="baseForm">
         <!-- 大标题 -->
@@ -389,7 +445,7 @@ onMounted(() => {
         <!-- 操作按钮 -->
         <template v-slot:Actions>
           <div style="text-align: center;">
-            <el-button type="primary" @click="onSubmit">提交</el-button>
+            <el-button type="primary" @click="onSubmit(baseForm)">提交</el-button>
             <el-button @click="handlerReset">重置</el-button>
           </div>
         </template>

@@ -1,5 +1,9 @@
 <template>
-    <el-tree v-bind="$attrs" v-model="Val" style="width:100%"
+    <el-tree-select v-bind="$attrs" v-model="Val" style="width:100%"
+        @change="props.change ? props.change($event) : false"
+        @visible-change="props.visibleChange ? props.visibleChange($event) : false"
+        @remove-tag="props.removeTag ? props.removeTag($event) : false" @clear="props.clear ? props.clear() : false"
+        @blur="props.blur ? props.blur($event) : false" @focus="props.focus ? props.focus($event) : false"
         @node-click="(a, b, c) => props.nodeClick ? props.nodeClick(a, b, c) : false"
         @node-contextmenu="(a, b, c, d) => props.nodeContextmenu ? props.nodeContextmenu(a, b, c, d) : false"
         @check-change="(a, b, c) => props.checkChange ? props.checkChange(a, b, c) : false"
@@ -86,6 +90,30 @@ const props = defineProps({
     nodeDrop: {
         type: Function,
         default: function () { }
+    },
+    change: {
+        type: Function,
+        default: () => () => { }
+    },
+    visibleChange: {
+        type: Function,
+        default: () => () => { }
+    },
+    removeTag: {
+        type: Function,
+        default: () => () => { }
+    },
+    clear: {
+        type: Function,
+        default: () => () => { }
+    },
+    blur: {
+        type: Function,
+        default: () => () => { }
+    },
+    focus: {
+        type: Function,
+        default: () => () => { }
     }
 })
 
