@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router"
-import XmwForm from '@/components/XmwForm.vue'
+import XmwForm from '../../packages/xmwForm/src/main.vue'
 
-const routes:Array<RouteRecordRaw> = [
+const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
         name: 'home',

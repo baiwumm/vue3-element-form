@@ -17,15 +17,15 @@
     "noImplicitAny": false,
     "paths": {
       "@/*": [
-        "src/*"
+        "examples/*"
       ]
     }
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue"
+    "examples/**/*.ts",
+    "examples/**/*.d.ts",
+    "examples/**/*.tsx",
+    "examples/**/*.vue"
   ],
   // ts 排除的文件
   "exclude": [

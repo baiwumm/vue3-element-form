@@ -1,6 +1,49 @@
-# vue3-element-table
+### 预览地址：[vue3-xmw-form](https://ele-plus-form.xmwpro.com/)
+
+# vue3-xmw-from
 
 基于 `Vue3` + `Element-plus` 封装的 `Form` 组件，支持所有 `Element-plus Form` 组件配置项 [文档](https://element-plus.gitee.io/zh-CN/component/form.html)
+
+### 使用方法
+* 根目录下执行 `npm i vue3-xmw-form` 命令
+```POWERSHELL
+npm i vue3-xmw-form
+```
+
+* 全局挂载组件
+```JAVASCRIPT
+import { createApp } from 'vue'
+import App from './App.vue'
+import Xmwform from 'vue3-xmw-form'
+
+createApp(App).use(Xmwform).mount('#app')
+```
+
+* 在页面上使用
+```HTML
+<!-- template -->
+<vue3-xmw-form
+    :formData="formData"
+    :formColumns="formColumns"
+    :formRules="formRules"
+    label-width="120px"
+    ref="baseForm"
+    >
+    <!-- 大标题 -->
+    <template v-slot:baseTitle>
+        <h1>基于 Element-plus 封装的表单组件</h1>
+    </template>
+    <!-- 操作按钮 -->
+    <template v-slot:Actions>
+        <div style="text-align: center">
+        <el-button type="primary" @click="onSubmit(baseForm)"
+            >提交</el-button
+        >
+        <el-button @click="handlerReset">重置</el-button>
+        </div>
+    </template>
+</vue3-xmw-form>
+```
 
 ### Form 属性
 
