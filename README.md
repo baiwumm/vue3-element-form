@@ -1,4 +1,4 @@
-### 预览地址：[vue3-xmw-form](https://ele-plus-form.xmwpro.com/)
+### 预览地址：[vue3-xmw-form](https://ele-plus-form.baiwumm.com/)
 
 # vue3-xmw-from
 
